@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2021-09-12
 
 ### Added
-
+- Apache CLI Implementation 
+- Added a help option
+- Added a batch option
+- Added a output option
 
 ### Changed
 
