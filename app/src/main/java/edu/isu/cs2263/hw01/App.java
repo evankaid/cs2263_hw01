@@ -7,12 +7,10 @@ package edu.isu.cs2263.hw01;
 
 import org.apache.commons.cli.*;
 
-import jdk.internal.joptsimple.HelpFormatter;
+//import jdk.internal.joptsimple.HelpFormatter;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
 
 
@@ -28,17 +26,22 @@ public class App {
 
         try {
             CommandLine cmd = parser.parse(options, args); 
+
             if(cmd.hasOption("help")){
+                System.out.println("hi");
                 printHelpMessage(options);
                 System.exit(0);
-            } 
+            } else {
+                batchDisplay(cmd);
+                outputDisplay(cmd);
+            }
             } catch (ParseException e) {
-                System.err.println("Failed to parse: " + e.getMessage());
+                System.out.println("Failed to parse: " + e.getMessage());
        
              }
         
     }
-
+    
     private static Options createOptions(){
         Options options = new Options();
         Option helpOption = Option.builder("h").longOpt("help").desc("Print usage message.").build();
@@ -48,11 +51,60 @@ public class App {
         options.addOption(helpOption);
         options.addOption(batchOption);
         options.addOption(outputOption);
+
         return options;
     }
-    
+
     private static void printHelpMessage(Options options){
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("eval [OPTIONS]", "Evaluation of simple mathematical expressions\n\n", options);
+        formatter.printHelp("eval [OPTIONS] \n\n Evaluation of simple mathematical expressions\n\n", options);
         }
+
+    private static String batchDisplay(CommandLine cmd){
+        String file = "";
+        if(cmd.hasOption("batch")){
+            file = cmd.getOptionValue("batch");
+            Path filePath = Path.of(file);
+            if(Files.exists(filePath)){
+                System.out.println(filePath);
+            } else {
+                System.out.println("The file doesn't exist for the batch input.");
+                System.exit(1);
+            }
+        }
+        return file;
+    }
+
+    private static void outputDisplay(CommandLine cmd){
+        if(cmd.hasOption("output")){
+            String file = cmd.getOptionValue("output");
+            Path filePath = Path.of(file);
+            try {
+                Files.deleteIfExists(filePath);
+                Files.createFile(filePath);
+                System.out.println(filePath);
+
+            } catch(IOException e) {
+                System.out.println(e.getMessage());
+                System.exit(1);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static String getGreeting(){
+            return "Hi";
+    }
 }
