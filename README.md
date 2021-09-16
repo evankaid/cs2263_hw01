@@ -2,7 +2,7 @@
 
  Description: The initial implementation and setting everything up for the repo.
  Table of Contents: N/A
- Installation:
+ Installation: Need the Apache CLI Dependency
  Usage:
  Contribution:
  Credits: Kaiden Evans
