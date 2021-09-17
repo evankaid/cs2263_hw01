@@ -7,7 +7,6 @@ package edu.isu.cs2263.hw01;
 
 import org.apache.commons.cli.*;
 
-//import jdk.internal.joptsimple.HelpFormatter;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -18,6 +17,8 @@ import java.nio.file.*;
 public class App {
     
 
+   /* Main method to run program
+      Version 1.0.0 */
     public static void main(String[] args)  {
 
         Options options = createOptions();
@@ -28,12 +29,13 @@ public class App {
             CommandLine cmd = parser.parse(options, args); 
 
             if(cmd.hasOption("help")){
-                System.out.println("hi");
                 printHelpMessage(options);
                 System.exit(0);
-            } else {
+            } else if(cmd.hasOption("batch")){
                 batchDisplay(cmd);
+            } else if(cmd.hasOption("output")){
                 outputDisplay(cmd);
+
             }
             } catch (ParseException e) {
                 System.out.println("Failed to parse: " + e.getMessage());
@@ -41,7 +43,7 @@ public class App {
              }
         
     }
-    
+    /* Creates the options for command line input */
     private static Options createOptions(){
         Options options = new Options();
         Option helpOption = Option.builder("h").longOpt("help").desc("Print usage message.").build();
@@ -55,11 +57,14 @@ public class App {
         return options;
     }
 
+    /* Formats the output when using the help option
+       Passes in all of the created options */
     private static void printHelpMessage(Options options){
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("eval [OPTIONS] \n\n Evaluation of simple mathematical expressions\n\n", options);
         }
 
+    /* Displays the batch file for user */
     private static String batchDisplay(CommandLine cmd){
         String file = "";
         if(cmd.hasOption("batch")){
@@ -75,6 +80,7 @@ public class App {
         return file;
     }
 
+    /*  Uses the file input to change where results are output */
     private static void outputDisplay(CommandLine cmd){
         if(cmd.hasOption("output")){
             String file = cmd.getOptionValue("output");
