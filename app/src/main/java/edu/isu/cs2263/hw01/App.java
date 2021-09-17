@@ -40,7 +40,7 @@ public class App {
             } catch (ParseException e) {
                 System.out.println("Failed to parse: " + e.getMessage());
        
-             }
+            }
         
     }
     /* Creates the options for command line input */
